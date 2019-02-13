@@ -37,15 +37,20 @@ public class BST_Node {
     }
 
     public boolean recursiveContains(BST_Node curr, String s) {
+        if (curr == null) {
+            return false;
+        }
+
         boolean is_right = isRight(s, curr.data,0);
         boolean is_right_again;
+
+
+
         if (is_right && curr.right != null) {
             if (curr.right.data.equals(s)) {
                 return true;
             } else {
-                is_right_again = isRight(s, curr.right.data,0);
-                return is_right_again ? recursiveContains(curr.right, s)
-                        : recursiveContains(curr.left, s);
+                return recursiveContains(curr.right, s);
             }
         } else if (!is_right && curr.left != null) {
             if (curr.left.data.equals(s)) {
@@ -92,9 +97,9 @@ public class BST_Node {
         return isRight(incoming.data, next.data, 0);
     }
 
-    public BST_Node removeNode(String s){
+    public boolean removeNode(String s){
         BST_Node temp = recursiveRemove(this,this, s);
-        return temp != null ? temp : this;
+        return temp != null;
     }
 
     public static BST_Node replaceTempInTree(BST_Node result, BST_Node curr, boolean isRight) {
@@ -106,7 +111,7 @@ public class BST_Node {
             if (temp.left == null) {
                 curr.right = temp_right;
             } else {
-                BST_Node replacement = findGreatestValueLeft(temp.left);
+                BST_Node replacement = findGreatestValueLeft(temp_left);
                 replacement.left = temp_left;
                 replacement.right = temp_right;
                 curr.right = replacement;
@@ -116,10 +121,10 @@ public class BST_Node {
             BST_Node temp_right = temp.right;
             BST_Node temp_left = temp.left;
 
-            if (temp.left == null) {
+            if (temp.right == null) {
                 curr.left = temp_right;
             } else {
-                BST_Node replacement = findGreatestValueLeft(temp.left);
+                BST_Node replacement = findGreatestValueLeft(temp_left);
                 replacement.left = temp_left;
                 replacement.right = temp_right;
                 curr.left = replacement;
@@ -129,7 +134,7 @@ public class BST_Node {
     }
 
     public static BST_Node findGreatestValueLeft(BST_Node curr) {
-        if (curr.left != null) {
+        if (curr.right != null && curr.right.right != null) {
             return findGreatestValueLeft(curr.right);
         } else {
             return curr;
@@ -137,6 +142,18 @@ public class BST_Node {
     }
 
     public BST_Node recursiveRemove(BST_Node result, BST_Node curr, String s) {
+        if (curr == null) {
+            return result;
+        } else if (curr.data.equals(s) && curr.right != null && curr.left == null
+                && curr.right.right == null && curr.right.left == null) {
+            this.right = curr.right;
+            return this.right;
+        } else if (curr.data.equals(s) && curr.right == null && curr.left != null
+                && curr.left.right == null && curr.left.left == null) {
+            this.left = curr.left;
+            return this.right;
+        }
+
         boolean is_right = isRight(s, curr.data,0);
         boolean is_right_again;
 
@@ -144,9 +161,7 @@ public class BST_Node {
             if (curr.right.data.equals(s)) {
                 return replaceTempInTree(result, curr, true);
             } else {
-                is_right_again = isRight(s, curr.right.data,0);
-                return is_right_again ? recursiveRemove(result, curr.right, s)
-                        : recursiveRemove(result, curr.left, s);
+                return recursiveRemove(result, curr.right, s);
             }
         } else if (!is_right && curr.left != null) {
             if (curr.left.data.equals(s)) {

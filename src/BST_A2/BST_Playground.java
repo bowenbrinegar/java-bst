@@ -86,11 +86,18 @@ public class BST_Playground {
 
     private static boolean removeTest() {
         BST tree = new BST();
-        tree.insert("A");
         tree.insert("B");
+        tree.insert("A");
+        tree.insert("D");
+        tree.insert("C");
+        tree.insert("E");
         tree.remove("B");
+        tree.remove("A");
+        tree.remove("D");
+        tree.remove("C");
+        tree.remove("E");
         printInOrder(tree.getRoot());
-        return !tree.contains("B");
+        return tree.empty();
     }
 
     private static BST generateTree() {

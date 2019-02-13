@@ -22,9 +22,15 @@ public class BST implements BST_Interface {
 
     @Override
     public boolean remove(String s) {
-        BST_Node temp = root;
-        root = root.removeNode(s);
-        return !temp.equals(root);
+        if (size == 1 && root.data.equals(s)) {
+            root = null;
+            return true;
+        } else if (root.removeNode(s)) {
+            size--;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
