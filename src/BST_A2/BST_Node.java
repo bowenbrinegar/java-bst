@@ -42,9 +42,6 @@ public class BST_Node {
         }
 
         boolean is_right = isRight(s, curr.data,0);
-        boolean is_right_again;
-
-
 
         if (is_right && curr.right != null) {
             if (curr.right.data.equals(s)) {
@@ -56,9 +53,7 @@ public class BST_Node {
             if (curr.left.data.equals(s)) {
                 return true;
             } else {
-                is_right_again = isRight(s, curr.left.data,0);
-                return is_right_again ? recursiveContains(curr.right, s)
-                        : recursiveContains(curr.left, s);
+                return recursiveContains(curr.left, s);
             }
         } else {
             return false;
@@ -144,18 +139,17 @@ public class BST_Node {
     public BST_Node recursiveRemove(BST_Node result, BST_Node curr, String s) {
         if (curr == null) {
             return result;
-        } else if (curr.data.equals(s) && curr.right != null && curr.left == null
+        } else if (curr.data.equals(s) && curr.right != null
                 && curr.right.right == null && curr.right.left == null) {
             this.right = curr.right;
             return this.right;
-        } else if (curr.data.equals(s) && curr.right == null && curr.left != null
+        } else if (curr.data.equals(s) && curr.left != null
                 && curr.left.right == null && curr.left.left == null) {
             this.left = curr.left;
             return this.right;
         }
 
         boolean is_right = isRight(s, curr.data,0);
-        boolean is_right_again;
 
         if (is_right && curr.right != null) {
             if (curr.right.data.equals(s)) {
@@ -167,24 +161,12 @@ public class BST_Node {
             if (curr.left.data.equals(s)) {
                 return replaceTempInTree(result, curr, false);
             } else {
-                is_right_again = isRight(s, curr.left.data,0);
-                return is_right_again ? recursiveRemove(result, curr.right, s)
-                        : recursiveRemove(result, curr.left, s);
+                return recursiveRemove(result, curr.left, s);
             }
         } else {
             return null;
         }
 
-    }
-
-    private static BST_Node findLeftMost(BST_Node curr, String s) {
-        boolean is_greater_than = isRight(s, curr.data, 0);
-
-        if (!is_greater_than) {
-            return curr.left;
-        } else {
-            return findLeftMost(curr.left, s);
-        }
     }
 
     public BST_Node findMin(){

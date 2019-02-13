@@ -13,29 +13,29 @@ public class BST_Playground {
      */
 
     public static void main(String[]args){
-//        if (insertTest1()) {
-//            System.out.println("Pass: Insert Test 1");
-//        } else {
-//            System.out.println("Fail: Insert Test 1");
-//        }
-//
-//        if (heightTest1()) {
-//            System.out.println("Pass: Height Test 1");
-//        } else {
-//            System.out.println("Fail: Height Test 1");
-//        }
+        if (insertTest1()) {
+            System.out.println("Pass: Insert Test 1");
+        } else {
+            System.out.println("Fail: Insert Test 1");
+        }
 
-//        if (removeTest1()) {
-//            System.out.println("Pass: Remove Test 1");
-//        } else {
-//            System.out.println("Fail: Remove Test 1");
-//        }
+        if (heightTest1()) {
+            System.out.println("Pass: Height Test 1");
+        } else {
+            System.out.println("Fail: Height Test 1");
+        }
 
-//        if (containsTest()) {
-//            System.out.println("Pass: Contains Test 1");
-//        } else {
-//            System.out.println("Fail: Contains Test 1");
-//        }
+        if (removeTest1()) {
+            System.out.println("Pass: Remove Test 1");
+        } else {
+            System.out.println("Fail: Remove Test 1");
+        }
+
+        if (containsTest()) {
+            System.out.println("Pass: Contains Test 1");
+        } else {
+            System.out.println("Fail: Contains Test 1");
+        }
 
         if (removeTest()) {
             System.out.println("Pass: Remove Test 1");
@@ -70,8 +70,7 @@ public class BST_Playground {
         tree.insert("A");
         tree.insert("C");
         tree.remove("C");
-        printInOrder(tree.getRoot());
-        return tree.height() == 0;
+        return tree.height() == 1;
     }
 
     private static boolean containsTest() {
@@ -96,7 +95,6 @@ public class BST_Playground {
         tree.remove("D");
         tree.remove("C");
         tree.remove("E");
-        printInOrder(tree.getRoot());
         return tree.empty();
     }
 
@@ -130,6 +128,7 @@ public class BST_Playground {
             printGivenLevel(tree.getRoot(), i);
         }
     }
+
     static void printGivenLevel(BST_Node root,int level){
         if(root==null)return;
         if(level==0)System.out.print(root.data+" ");
@@ -138,6 +137,7 @@ public class BST_Playground {
             printGivenLevel(root.right,level-1);
         }
     }
+
     static void printInOrder(BST_Node root){
         //will print your current tree In-Order
         if(root!=null){
